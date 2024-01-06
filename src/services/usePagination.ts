@@ -22,7 +22,6 @@ export default function usePagination() {
       const urlMovies = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fr-FR&region=FR&sort_by=popularity.desc&page=${pageNumber}&primary_release_year=`;
 
       const data = (await axios.get(urlMovies, options)).data
-      console.log('po', data)
       totalPages.value = data.total_pages
       totalResults.value = data.total_results
       respData.value = data.results

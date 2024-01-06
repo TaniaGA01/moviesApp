@@ -9,6 +9,11 @@
   }
 
   body{
-    background-color: theme('colors.indigo.950');
+    background-color: theme('colors.gray.950');
+    background-image: url(../../imgs/studio-cinema-vip-sombre-nature-morte.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position:bottom;
+    background-attachment: fixed;
   }
 }

@@ -1,7 +1,9 @@
 <template>
   <div>
-    <h1 class="text-3xl font-thin text-white uppercase">
-      <span>Movies</span>APP
-    </h1>
+    <div class="text-center mt-12">
+      <h1 class="text-6xl font-bold text-white pt-5">
+        <span>Movies</span><span class="text-violet-600">APP</span>
+      </h1>
+    </div>
   </div>
 </template>
