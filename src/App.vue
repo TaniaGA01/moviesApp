@@ -9,7 +9,5 @@ import { RouterView } from 'vue-router'
 </template>
 
 <style lang="scss">
-body{
-  background-color: black;
-}
+
 </style>
