@@ -13,9 +13,11 @@ export default function usePagination() {
   let totalResults = ref(0)
   let page = ref(1)
   let perPage = 20
+  let title = ref()
+  let year = ref()
 
 
-  const getPages = async (pageNumber:number) => {
+  const getPages = async (pageNumber:number, titleValue = title.value, yearValue = year.value) => {
     load.value = true
 
     try {
@@ -34,6 +36,13 @@ export default function usePagination() {
     }
   }
   getPages(page.value)
+
+  const searchRequestValues = (titleValue:string = '', yearValue:number = 0) => {
+    title.value = titleValue
+    year.value = yearValue
+
+    return getPages(page.value, title.value, year.value)
+  }
 
   const translatePagination = (): void => {
       const getPaginationDivContent = document.querySelector('.pagination-content') as HTMLElement
@@ -108,6 +117,7 @@ export default function usePagination() {
       totalResults,
       perPage,
       page,
+      searchRequestValues,
       nextPage,
       backPage,
       goToPage,

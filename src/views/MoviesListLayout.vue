@@ -19,6 +19,7 @@ const {
   middleOnes,
   lastPage
 } = usePagination()
+
 </script>
 <template>
   <Spinner v-if="load" />

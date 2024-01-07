@@ -10,8 +10,7 @@ import { reactive, ref } from 'vue';
   ])
 
   const save = () => {
-    console.log('movieTitle', movieTitle)
-    emit('movie-title')
+    emit('movie-title', movieTitle.title)
   }
 
 </script>
@@ -26,7 +25,6 @@ import { reactive, ref } from 'vue';
                 name="movie-title"
                 id="movie-title"
                 v-model="movieTitle.title"
-                @input="$emit('movie-title', ($event.target as HTMLInputElement).value)"
                 autocomplete="given-title"
                 placeholder="Titre du film"
                 class="block w-full rounded-md  bg-gray-950/40 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-violet-500 sm:text-sm sm:leading-6 px-2 border border-violet-700" />
