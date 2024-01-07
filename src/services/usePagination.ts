@@ -1,4 +1,4 @@
-import { ref } from "vue"
+import { computed, ref } from "vue"
 import type { Movie, Genre } from '@/services/interfaces/movies.interfaces';
 import { options } from '@/api/moviesAPI';
 import axios from "axios";
@@ -17,7 +17,8 @@ export default function usePagination() {
   let year = ref()
 
 
-  const getPages = async (pageNumber:number, titleValue = title.value, yearValue = year.value) => {
+
+  const getAllPages = async (pageNumber:number) => {
     load.value = true
 
     try {
@@ -35,73 +36,60 @@ export default function usePagination() {
       load.value = false
     }
   }
-  getPages(page.value)
+  getAllPages(page.value)
 
   const searchRequestValues = (titleValue:string = '', yearValue:number = 0) => {
     title.value = titleValue
     year.value = yearValue
-
-    return getPages(page.value, title.value, year.value)
   }
 
-  const translatePagination = (): void => {
-      const getPaginationDivContent = document.querySelector('.pagination-content') as HTMLElement
-      getPaginationDivContent.style.transition = 'all 0.25s ease 0s'
-      const pagesValue = []
+  const getPagesBySearch = async(titleValue:string = '', yearValue:number = 0) =>{
+    load.value = true
 
-      if (page.value >= 3) {
-          pagesValue.push(page.value)
-          pagesValue.forEach(element => {
-              if (element) {
-                  getPaginationDivContent.style.position = `absolute`
-                  getPaginationDivContent.style.right = `1px`
-              }
-          })
+    try {
+      respData.value = []
+      for (let pageNumber = 1; pageNumber < 50; pageNumber++) {
+        const urlMovies = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fr-FR&region=FR&sort_by=popularity.desc&page=${pageNumber}&primary_release_year=`;
+        const pageOfMovies = [...(await axios.get(urlMovies, options)).data.results]
+        movies.value.push(...pageOfMovies)
       }
+
+    } catch (error) {
+      console.error('Not data found')
+    } finally{
+      load.value = false
+    }
   }
 
   const nextPage = (): void => {
-    if (page.value !== 1) {
+    if (page.value !== Math.ceil(respData.value.length / perPage)) {
         page.value + 1
-        getPages(page.value + 1)
+        getAllPages(page.value + 1)
     }else{
-      getPages(2)
+      page.value = 1
+      getAllPages(2)
     }
-    translatePagination()
   };
 
   const backPage = (): void => {
       if (page.value !== 1) {
           page.value - 1;
-          getPages(page.value - 1)
+          getAllPages(page.value - 1)
       }
-      translatePagination()
   };
 
   const goToPage = (numPage: number) => {
       page.value = numPage;
-      getPages(numPage)
-      translatePagination()
+      getAllPages(numPage)
   };
 
   const firstPage = (): number => {
-    getPages(1)
+    getAllPages(1)
     return Math.ceil(page.value = 1)
   }
 
-  const firstOnes = (): any => {
-    if (page.value) {
-      return 3
-    }
-    translatePagination()
-  }
-
-  const middleOnes = (): any => {
-      if (page.value) {
-          return Math.ceil(page.value)
-      }
-      translatePagination()
-
+  const middlePages =() => {
+    return Math.ceil(page.value)
   }
 
   const lastPage = (): number => {
@@ -117,15 +105,18 @@ export default function usePagination() {
       totalResults,
       perPage,
       page,
+      title,
+      getPagesBySearch,
       searchRequestValues,
       nextPage,
       backPage,
       goToPage,
       firstPage,
-      firstOnes,
-      middleOnes,
+      middlePages,
       lastPage
   };
 
 }
+
+
 

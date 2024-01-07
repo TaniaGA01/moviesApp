@@ -6,8 +6,7 @@ defineProps<{
   totalPages:Number
   perPage: Number,
   firstPage: Function,
-  firstOnes: Function,
-  middleOnes: Function,
+  middlePages: Function,
   lastPage: Function,
   currentPage: Number,
   goToPage: Function,
@@ -50,24 +49,18 @@ defineProps<{
                     </a>
                     <div class="pagination">
                         <div class="pagination-content">
-                            <div v-for="(item, idx) in firstOnes" :key="item">
-                                <a v-if="idx as unknown as number < 3" href="#" @click="goToPage(item)"
-                                    :class="[currentPage === item ? 'relative z-10 inline-flex items-center border border-violet-500 bg-violet-600 px-4 py-2 text-sm font-medium text-white-600 focus:z-20': 'relative inline-flex items-center border border-violet-600  px-4 py-2 text-sm font-medium text-violet-600 hover:bg-gray-50 focus:z-20']">
-                                    {{ item }}
+
+                                <a href="#" @click="goToPage(middlePages())"
+                                    :class="[currentPage === middlePages() ? 'relative z-10 inline-flex items-center border border-violet-600 bg-violet-600 px-4 py-2 text-sm font-medium focus:z-20': 'relative inline-flex items-center border border-violet-600  px-4 py-2 text-sm font-medium text-violet-600 hover:bg-gray-50 focus:z-20']">
+                                    {{ middlePages() }}
                                 </a>
-                            </div>
-                            <div v-for="(item, idx) in middleOnes" :key="item">
-                                <a href="#" v-if="idx as unknown as number > 2" @click="goToPage(item)"
-                                    :class="[currentPage === item ? 'relative z-10 inline-flex items-center border border-violet-600 bg-violet-600 px-4 py-2 text-sm font-medium focus:z-20': 'relative inline-flex items-center border border-violet-600  px-4 py-2 text-sm font-medium text-violet-600 hover:bg-gray-50 focus:z-20']">
-                                    {{ item }}
-                                </a>
-                            </div>
                         </div>
                     </div>
+
                     <a href="#" @click="nextPage()"
                         class="relative inline-flex items-center border border-violet-600 px-2 py-2 text-sm font-medium text-violet-600 hover:bg-gray-50 focus:z-20">
                         <span class="sr-only">Suivante</span>
-                        <span class="text-violet-600">></span>
+                        <span class="text-violet-600">{{ `>` }}</span>
                     </a>
                     <a href="#" @click="goToPage(totalPages)"
                         class="relative inline-flex items-center border border-violet-600 rounded-r-md px-4 py-2 text-sm font-medium  hover:bg-gray-50 focus:z-20"
@@ -83,7 +76,7 @@ defineProps<{
 
 <style lang="scss" scoped>
 .pagination {
-    width: 151px;
+    width: 50px;
     height: 38px;
     contain: strict;
     display: flex;
