@@ -16,8 +16,6 @@ export default function usePagination() {
   let title = ref()
   let year = ref()
 
-
-
   const getAllPages = async (pageNumber:number) => {
     load.value = true
 
@@ -38,18 +36,18 @@ export default function usePagination() {
   }
   getAllPages(page.value)
 
-  const searchRequestValues = (titleValue:string = '', yearValue:number = 0) => {
+  const searchRequestValues = (titleValue:string = '', yearValue:string = '') => {
     title.value = titleValue
     year.value = yearValue
   }
 
-  const getPagesBySearch = async(titleValue:string = '', yearValue:number = 0) =>{
+  const getPagesBySearch = async() =>{
     load.value = true
 
     try {
       respData.value = []
       for (let pageNumber = 1; pageNumber < 50; pageNumber++) {
-        const urlMovies = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fr-FR&region=FR&sort_by=popularity.desc&page=${pageNumber}&primary_release_year=`;
+        const urlMovies = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fr-FR&region=FR&sort_by=popularity.desc&page=${pageNumber}`;
         const pageOfMovies = [...(await axios.get(urlMovies, options)).data.results]
         movies.value.push(...pageOfMovies)
       }
@@ -61,14 +59,24 @@ export default function usePagination() {
     }
   }
 
+
+
+  const paginatedData = computed(() =>
+  respData.value.slice((page.value - 1) * perPage, page.value * perPage)
+  )
+
   const nextPage = (): void => {
+
+    console.log('title.value', title.value)
+    console.log('year.value', year.value)
     if (page.value !== Math.ceil(respData.value.length / perPage)) {
-        page.value + 1
-        getAllPages(page.value + 1)
+      page.value + 1
+      getAllPages(page.value + 1)
     }else{
       page.value = 1
       getAllPages(2)
     }
+
   };
 
   const backPage = (): void => {
@@ -106,6 +114,8 @@ export default function usePagination() {
       perPage,
       page,
       title,
+      paginatedData,
+      getAllPages,
       getPagesBySearch,
       searchRequestValues,
       nextPage,
