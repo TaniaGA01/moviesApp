@@ -5,7 +5,7 @@ import MoviesListeLayout from './MoviesListLayout.vue'
 
 </script>
 <template>
-  <main class="px-7 pb-12">
+  <main class="px-7">
     <Header/>
     <MoviesListeLayout />
   </main>

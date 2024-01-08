@@ -9,15 +9,13 @@ import Pagination from '@/components/Pagination.vue';
 
 const {
   load,
-  movies,
   respData,
   totalResults,
   totalPages,
   perPage,
   page,
-  paginatedData,
   getAllPages,
-  getPagesBySearch,
+  searchRequestValues,
   nextPage,
   backPage,
   goToPage,
@@ -32,64 +30,39 @@ watchEffect(() => {
     data.value = respData.value
 })
 
-const movieTitle = reactive({ title:'' })
+const movieTitle = reactive({ title:ref() })
 
-const movieYear = reactive({ year:'' })
+const movieYear = reactive({ year:ref() })
 
 const regexExp = {
     inputNumber: /^[0-9]{0,4}$/,
 }
 
-const searchByTitle = (title:string) => {
-
-  console.log(title + movieYear.year)
-
-  if(title && !movieYear.year){
-     movies.value.filter((movie) => {
-      if(movie.title.toLowerCase().includes(movieTitle.title.toLowerCase())){
-        data.value.find(item => item.id === movie.id) ? null : data.value.push(movie)
-      }
-    })
-
-  }
-}
-
-const serchByYear = (year:string) => {
-
-  if(!movieTitle.title && year){
-
-    movies.value.filter((movie) => {
-
-      const dateString = movie.release_date.toString()
-      const date = new Date(dateString)
-      const yearMovie = date.getFullYear()
-
-      if(yearMovie.toString() === year){
-        data.value.find(item => item.id === movie.id) ? null : data.value.push(movie)
-      }
-
-    })
-  }
-}
-
 const reset = () => {
-  respData.value = []
-  movieTitle.title = ''
-  movieYear.year = ''
-  getAllPages(page.value)
+  // respData.value = []
+  // movieTitle.title = ref()
+  // movieYear.year = ref()
+  // getAllPages(page.value, movieTitle.title, movieYear.year)
+  window.location.reload()
 }
+
+const resultTitle = ref()
+const resultYear = ref()
 
 const save = async () => {
 
-  await getPagesBySearch()
-  searchByTitle(movieTitle.title)
-  serchByYear(movieYear.year)
+  searchRequestValues(movieTitle.title, movieYear.year)
+
+  resultTitle.value = movieTitle.title
+  resultYear.value = movieYear.year
+
+  movieTitle.title = ref()
+  movieYear.year = ref()
+
   totalPages.value = Math.ceil(data.value.length/perPage)
   totalResults.value = data.value.length
-  data.value = paginatedData.value
 
-  movieTitle.title = ''
-  movieYear.year = ''
+  getAllPages(1, movieTitle.title, movieYear.year)
 }
 
 </script>
@@ -135,6 +108,17 @@ const save = async () => {
     </div>
   </form>
   <Spinner v-if="load" />
+  <div v-if="resultTitle || resultYear" class="mb-10">
+    <h2  class=" text-violet-500 uppercase">Résultats de la recherche par :
+      <span class="text-white">
+        {{ resultTitle }} / {{ resultYear }}
+      </span>
+    </h2>
+  </div>
+  <div v-else class="mb-10 text-3xl">
+    <h2  class=" text-violet-500 uppercase font-semibold">Catalogue de filmes</h2>
+  </div>
+
   <MoviesList :respData="data" />
   <NoData v-if="data.length === 0 && !load" />
   <Pagination v-if="data.length !== 0 && !load"
