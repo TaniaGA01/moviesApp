@@ -1,4 +1,4 @@
-import { computed, ref } from "vue"
+import { ref } from "vue"
 import type { Movie, Genre } from '@/services/interfaces/movies.interfaces';
 import { options } from '@/api/moviesAPI';
 import axios from "axios";

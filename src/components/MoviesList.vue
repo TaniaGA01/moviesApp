@@ -22,28 +22,30 @@ import { ref } from 'vue';
   }>()
 </script>
 <template>
-  <div class="grid grid-flow-row-dense grid-cols-2 grid-rows-1 md:grid-cols-5 gap-5 ">
+  <div class="grid grid-flow-row-dense grid-cols-2 grid-rows-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 ">
     <div
       v-for="movie in respData"
       :key="movie.id"
       class="rounded-lg border border-violet-600 p-2 bg-violet-950/40"
     >
-      <img
+      <RouterLink :to="{ name: 'film', params: { id: movie.id } }">
+        <img
         :src="`https://image.tmdb.org/t/p/w440_and_h660_face${movie.poster_path}`"
         alt=""
         srcset=""
         class="rounded-md mb-2"
       >
-      <h2 class="text-white text-center uppercase text-lg mt-2">{{ movie.title }}</h2>
-      <p class="text-center text-white text-sm">{{ movie.release_date }}</p>
-      {{ movie.popularity }}
-        <div class="flex flex-wrap">
-          <div v-for="(genre, idx) in genres" :key="`${idx}`">
-            <div v-for="movieGenre in movie.genre_ids">
-              <span v-if="genre.id === movieGenre"><small class="text-violet-500 pr-4">{{ genre.name }}</small></span>
-            </div>
+      </RouterLink>
+      <h2 class="text-white text-left uppercase font-medium mt-2 mb-5">{{ movie.title }}</h2>
+      <p class="text-left text-violet-300 text-sm">Date de sortie : <span>{{ movie.release_date }}</span></p>
+      <p class="text-left text-white text-sm">Likes : <span> {{ Math.ceil(movie.popularity) }}</span></p>
+      <div class="flex flex-wrap mt-3">
+        <div v-for="(genre, idx) in genres" :key="`${idx}`">
+          <div v-for="movieGenre in movie.genre_ids">
+            <span v-if="genre.id === movieGenre"><small class="text-violet-500 pr-4">{{ genre.name }}</small></span>
           </div>
         </div>
+      </div>
     </div>
   </div>
 </template>
