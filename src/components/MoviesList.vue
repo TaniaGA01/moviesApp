@@ -35,8 +35,8 @@ import { ref } from 'vue';
           srcset=""
           class="rounded-md mb-2"
         >
+      <h2 class="text-white text-left uppercase font-medium mt-2 mb-5 hover:text-violet-500">{{ movie.title }}</h2>
       </RouterLink>
-      <h2 class="text-white text-left uppercase font-medium mt-2 mb-5">{{ movie.title }}</h2>
       <p class="text-left text-violet-300 text-sm">Date de sortie : <span>{{ movie.release_date }}</span></p>
       <p class="text-left text-white text-sm">Likes : <span> {{ Math.ceil(movie.popularity) }}</span></p>
       <div class="flex flex-wrap mt-3">

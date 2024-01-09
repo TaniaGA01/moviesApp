@@ -41,29 +41,37 @@ const movieYear = reactive({ year:ref() })
 const resultTitle = ref()
 const resultYear = ref()
 
-const alert = reactive<AlertI>({ message:'', show:false })
-const titleInput = ref<HTMLInputElement | null>(null);
-const titleInputValue = ref()
+const alertTitle = reactive<AlertI>({ message:'', show:false })
+const alertYear = reactive<AlertI>({ message:'', show:false })
 
+const valideYearValue = ref(false)
+const regexExp = /^\d{4}$/
 
-const getTitleInputValue = () => {
-  titleInputValue.value = titleInput.value?.value;
-}
-
-const regexExp = {
-    inputNumber: /^[0-9]{0,4}$/,
+const inputYearValidation = () => {
+  if(movieYear.year !== ''){
+    valideYearValue.value = regexExp.test(movieYear.year)
+  }
 }
 
 const save = async () => {
 
-  getTitleInputValue()
+  inputYearValidation()
 
-  if(titleInputValue.value === ''){
-    alert.message = 'Merci de renseigner le titre du film'
-    alert.show = true
+  if(!movieTitle.title){
+    alertTitle.message = 'Merci de renseigner le titre du film'
+    alertTitle.show = true
     return
   }else{
-    alert.show = false
+    alertTitle.show = false
+  }
+
+  if(valideYearValue.value === false && movieYear.year ){
+
+    alertYear.message = 'Merci de renseigner une année valide'
+    alertYear.show = true
+    return
+  }else{
+    alertYear.show = false
   }
 
   searchRequestValues(movieTitle.title, movieYear.year)
@@ -80,6 +88,10 @@ const save = async () => {
 }
 
 const reset = () => {
+  movieTitle.title = ''
+  movieYear.year = ''
+  alertTitle.show = false
+  alertYear.show = false
   resultTitle.value = ''
   resultYear.value = ''
   getAllPages(1, title.value = undefined, year.value = undefined)
@@ -87,9 +99,9 @@ const reset = () => {
 
 const scrollTop = () => {
   window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "smooth",
+    top: 0,
+    left: 0,
+    behavior: "smooth",
   });
 }
 
@@ -100,7 +112,7 @@ const scrollTop = () => {
       <div class="lg:grid lg:grid-cols-2 gap-3 items-start mx-auto sm:w-4/5">
           <div class="lg:w-full mt-5">
             <label for="movie-title"
-              :class="[alert.show === false ? 'text-white' : 'text-red-500', 'block text-sm font-medium leading-6']">
+              :class="[alertTitle.show === false ? 'text-white' : 'text-red-500', 'block text-sm font-medium leading-6']">
               Titre du film
             </label>
             <div class="mt-2">
@@ -111,13 +123,17 @@ const scrollTop = () => {
                 ref="titleInput"
                 v-model="movieTitle.title"
                 placeholder="Titre du film"
-                :class="[alert.show === false ? 'focus:ring-violet-500 border-violet-700  ring-white/10' : 'border-red-500', 'block w-full rounded-md  bg-gray-950/40 py-1.5 text-white shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6 px-2 border ']" />
+                @click="alertTitle.show = false"
+                :class="[alertTitle.show === false ? 'focus:ring-violet-500 border-violet-700  ring-white/10' : 'border-red-500', 'block w-full rounded-md  bg-gray-950/40 py-1.5 text-white shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6 px-2 border ']" />
+
             </div>
-            <Alert v-if="alert.show === true" :alert="alert"/>
+            <div v-if="alertTitle.show === true" class="text-red-500 font-medium">
+                <span>{{ alertTitle.message }}</span>
+            </div>
           </div>
 
           <div class="lg:full mt-5">
-            <label for="movie-year" class="block text-sm font-medium leading-6 text-white">Année du film</label>
+            <label for="movie-year" :class="[alertYear.show === false ? 'text-white' : 'text-red-500', 'block text-sm font-medium leading-6']">Année du film</label>
             <div class="mt-2">
               <input
                 type="text"
@@ -125,7 +141,11 @@ const scrollTop = () => {
                 id="movie-year"
                 v-model="movieYear.year"
                 placeholder="Année du film"
-                class="block w-full rounded-md bg-gray-950/40 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-violet-500 sm:text-sm sm:leading-6 px-2 border border-violet-700" />
+                @click="alertYear.show = false"
+                :class="[alertYear.show === false ? 'focus:ring-violet-500 border-violet-700  ring-white/10' : 'border-red-500', 'block w-full rounded-md  bg-gray-950/40 py-1.5 text-white shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6 px-2 border ']" />
+            </div>
+            <div v-if="alertYear.show === true" class="text-red-500 font-medium">
+                <span>{{ alertYear.message }}</span>
             </div>
           </div>
       </div>

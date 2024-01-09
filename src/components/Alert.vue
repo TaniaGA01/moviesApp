@@ -7,5 +7,6 @@ defineProps<{
 <template>
     <div class="text-red-500 font-medium">
         <span>{{ alert.message }}</span>
+        <!-- <slot></slot> -->
     </div>
 </template>

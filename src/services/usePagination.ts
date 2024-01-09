@@ -42,7 +42,7 @@ export default function usePagination() {
       page.value = data.page
 
     } catch (error) {
-      console.error('Not data found')
+      console.log('error', error)
     } finally{
       load.value = false
     }
