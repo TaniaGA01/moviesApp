@@ -30,11 +30,11 @@ import { ref } from 'vue';
     >
       <RouterLink :to="{ name: 'film', params: { id: movie.id } }">
         <img
-        :src="`https://image.tmdb.org/t/p/w440_and_h660_face${movie.poster_path}`"
-        alt=""
-        srcset=""
-        class="rounded-md mb-2"
-      >
+          :src="`https://image.tmdb.org/t/p/w440_and_h660_face${movie.poster_path}`"
+          alt=""
+          srcset=""
+          class="rounded-md mb-2"
+        >
       </RouterLink>
       <h2 class="text-white text-left uppercase font-medium mt-2 mb-5">{{ movie.title }}</h2>
       <p class="text-left text-violet-300 text-sm">Date de sortie : <span>{{ movie.release_date }}</span></p>

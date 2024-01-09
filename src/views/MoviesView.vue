@@ -18,6 +18,8 @@ const {
   totalPages,
   perPage,
   page,
+  title,
+  year,
   getAllPages,
   searchRequestValues,
   nextPage,
@@ -78,11 +80,9 @@ const save = async () => {
 }
 
 const reset = () => {
-  // respData.value = []
-  // movieTitle.title = ''
-  // movieYear.year = ''
-  // getAllPages(1, movieTitle.title, movieYear.year)
-  window.location.reload()
+  resultTitle.value = ''
+  resultYear.value = ''
+  getAllPages(1, title.value = undefined, year.value = undefined)
 }
 
 const scrollTop = () => {

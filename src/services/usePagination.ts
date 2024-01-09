@@ -24,7 +24,8 @@ export default function usePagination() {
     const getData = () => {
       if(titleValue === undefined || yearValue === undefined){
         url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fr-FR&region=FR&sort_by=popularity.desc&page=${pageNumber}`
-      }else{
+      }
+      else{
         url = `https://api.themoviedb.org/3/search/multi?query=${titleValue},${yearValue}&include_adult=false&language=fr-FR&page=${pageNumber}`
       }
     }
@@ -99,6 +100,7 @@ export default function usePagination() {
       perPage,
       page,
       title,
+      year,
       getAllPages,
       searchRequestValues,
       nextPage,
