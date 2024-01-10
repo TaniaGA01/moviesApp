@@ -26,7 +26,7 @@ export default function usePagination() {
         url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fr-FR&region=FR&sort_by=popularity.desc&page=${pageNumber}`
       }
       else{
-        url = `https://api.themoviedb.org/3/search/multi?query=${titleValue},${yearValue}&include_adult=false&language=fr-FR&page=${pageNumber}`
+        url = `https://api.themoviedb.org/3/search/movie?query=${titleValue}&include_adult=false&language=fr-FR&page=${pageNumber}&year=${yearValue}`
       }
     }
     getData()
@@ -38,8 +38,8 @@ export default function usePagination() {
       const data = (await axios.get(urlMovies, options)).data
       totalPages.value = data.total_pages
       totalResults.value = data.total_results
-      respData.value = data.results
       page.value = data.page
+      respData.value = data.results
 
     } catch (error) {
       console.log('error', error)
