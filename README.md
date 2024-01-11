@@ -28,6 +28,7 @@ npm install
 ```sh
 npm run dev
 ```
+Ce projet nécessite d'un fichier .env avec cette variable ```VITE_APP_READ_ACCESS_TOKEN``` pour le Read Access Token
 
 ### Oportunités d'améliorations
 Ce projet pourrait avoir ces évolutions :
