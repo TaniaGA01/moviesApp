@@ -25,7 +25,7 @@ import Note from './Note.vue';
   }>()
 </script>
 <template>
-  <div class="grid grid-flow-row-dense grid-cols-2 grid-rows-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 ">
+  <div class="grid grid-flow-row-dense grid-cols-1 grid-rows-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 ">
     <div
       v-for="movie in respData"
       :key="movie.id"
