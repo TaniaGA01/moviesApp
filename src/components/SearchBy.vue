@@ -19,6 +19,6 @@ defineProps<{
     </h2>
   </div>
   <div v-else class="mb-10 text-3xl">
-    <h2  class=" text-violet-500 uppercase font-semibold">Catalogue de filmes</h2>
+    <h2  class=" text-violet-500 uppercase font-semibold">Catalogue de films</h2>
   </div>
 </template>
