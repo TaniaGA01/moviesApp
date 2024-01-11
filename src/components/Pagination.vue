@@ -50,7 +50,7 @@ defineProps<{
                     <div class="pagination">
                         <div class="pagination-content">
                           <a href="#" @click="goToPage(middlePages())"
-                              :class="[currentPage === middlePages() ? 'relative z-10 inline-flex items-center border border-violet-600 bg-violet-600 px-4 py-2 text-sm font-medium focus:z-20': 'relative inline-flex items-center border border-violet-600  px-4 py-2 text-sm font-medium text-violet-600 hover:bg-gray-50 focus:z-20']">
+                              :class="[currentPage === middlePages() ? 'relative z-10 inline-flex items-center border border-violet-600 bg-violet-600 px-4 py-2 text-sm font-medium focus:z-20 text-white ': 'relative inline-flex items-center border border-violet-600  px-4 py-2 text-sm font-medium text-violet-600 hover:bg-gray-50 focus:z-20']">
                               {{ middlePages() }}
                           </a>
                         </div>

@@ -4,6 +4,11 @@ import axios from 'axios';
 import { options } from '@/api/moviesAPI';
 import { useRoute } from 'vue-router';
 import type { Movie } from '@/services/interfaces/movies.interfaces';
+import Rating from '@/components/Rating.vue';
+import usePagination from '@/services/usePagination'
+const {
+  rating
+} = usePagination()
 
 const route = useRoute()
 const movie = ref<Movie>()
@@ -22,8 +27,7 @@ getMovie()
 </script>
 <template>
   <div class="mx-auto max-w-2xl px-4 pt-16 sm:px-6 sm:pt-12 lg:pt-8 lg:max-w-7xl  flex justify-center">
-    <div class=" flex flex-col items-center justify-center sm:w-1/2 p-12 rounded-lg border border-violet-600  bg-violet-950/40">
-      <h1 class="text-white uppercase text-4xl mb-5 text-center ">{{ movie?.title }}</h1>
+    <div class=" flex flex-col items-center justify-center sm:w-1/2 p-12 rounded-lg border border-violet-600  bg-violet-950/40 relative">
       <div class="sm:flex sm:justify-end">
         <img
           :src="`https://image.tmdb.org/t/p/w440_and_h660_face${movie?.backdrop_path}`"
@@ -32,6 +36,8 @@ getMovie()
           class="rounded-md my-5 h-80"
         >
       </div>
+      <h1 class="text-white uppercase text-4xl mb-1 text-center ">{{ movie?.title }}</h1>
+      <Rating :rating="rating" :popularity="movie?.popularity" class="ml-2"/>
       <div class="flex flex-col items-center justify-center w-full">
           <p class="text-white text-center">{{ movie?.overview }}</p>
       </div>

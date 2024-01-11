@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import axios from 'axios';
 import { options } from '@/api/moviesAPI';
 import type { Genre, Movie } from '@/services/interfaces/movies.interfaces';
-import { ref } from 'vue';
+import Rating from './Rating.vue';
+import Note from './Note.vue';
 
   let genres = ref<Genre[]>([])
 
@@ -19,6 +21,7 @@ import { ref } from 'vue';
 
   defineProps<{
     respData: Array<Movie>
+    rating:Number
   }>()
 </script>
 <template>
@@ -28,6 +31,7 @@ import { ref } from 'vue';
       :key="movie.id"
       class="rounded-lg border border-violet-600 p-2 bg-violet-950/40"
     >
+      <Note :note="movie.vote_average"/>
       <RouterLink :to="{ name: 'film', params: { id: movie.id } }">
         <img
           :src="`https://image.tmdb.org/t/p/w440_and_h660_face${movie.poster_path}`"
@@ -35,11 +39,16 @@ import { ref } from 'vue';
           srcset=""
           class="rounded-md mb-2"
         >
-      <h2 class="text-white text-left uppercase font-medium mt-2 mb-5 hover:text-violet-500">{{ movie.title }}</h2>
+      <h2 class="text-white text-left uppercase font-medium mt-2 mb-5 hover:text-violet-500 h-20">{{ movie.title }}</h2>
       </RouterLink>
-      <p class="text-left text-violet-300 text-sm">Date de sortie : <span>{{ movie.release_date }}</span></p>
-      <p class="text-left text-white text-sm">Likes : <span> {{ Math.ceil(movie.popularity) }}</span></p>
-      <div class="flex flex-wrap mt-3">
+      <p class="text-left text-violet-300 text-sm">Date de sortie : <span>{{ movie.release_date }}</span>
+      </p>
+      <div class="sm:flex sm:items-center">
+        <p class="text-left text-violet-300 text-sm">Popularité :
+        </p>
+        <Rating :rating="rating" :popularity="movie.popularity" class="sm:ml-2"/>
+      </div>
+      <div class="flex flex-wrap mt-3 relative">
         <div v-for="(genre, idx) in genres" :key="`${idx}`">
           <div v-for="movieGenre in movie.genre_ids">
             <span v-if="genre.id === movieGenre"><small class="text-violet-500 pr-4">{{ genre.name }}</small></span>

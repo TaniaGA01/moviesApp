@@ -15,6 +15,7 @@ export default function usePagination() {
   let perPage = 20
   let title = ref()
   let year = ref()
+  let rating = ref()
 
   const getAllPages = async (pageNumber:number = page.value, titleValue:string = title.value, yearValue:string = year.value) => {
     load.value = true
@@ -40,6 +41,10 @@ export default function usePagination() {
       totalResults.value = data.total_results
       page.value = data.page
       respData.value = data.results
+
+      if(yearValue === undefined){
+        rating.value = respData.value[0].popularity
+      }
 
     } catch (error) {
       console.log('error', error)
@@ -101,6 +106,7 @@ export default function usePagination() {
       page,
       title,
       year,
+      rating,
       getAllPages,
       searchRequestValues,
       nextPage,

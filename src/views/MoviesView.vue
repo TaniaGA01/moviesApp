@@ -19,6 +19,7 @@ const {
   page,
   title,
   year,
+  rating,
   getAllPages,
   searchRequestValues,
   nextPage,
@@ -162,7 +163,7 @@ const scrollTop = () => {
       </div>
   <Spinner v-if="load" />
   <SearchBy :resultTitle="resultTitle" :resultYear="resultYear"/>
-  <MoviesList :respData="data" />
+  <MoviesList :respData="data" :rating="rating"/>
   <NoData v-if="data.length === 0 && !load" />
   <Pagination v-if="data.length !== 0 && !load"
     :respData="data"
