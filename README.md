@@ -1,5 +1,5 @@
 # Movies App
-Projet de développement fron-end
+Projet de développement front-end
 
 
 ## Trouvez [ici](https://moviesapp000.netlify.app/) la progression de ce projet
