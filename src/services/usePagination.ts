@@ -42,7 +42,7 @@ export default function usePagination() {
       page.value = data.page
       respData.value = data.results
 
-      if(yearValue === undefined){
+      if(yearValue === undefined && pageNumber === 1){
         rating.value = respData.value[0].popularity
       }
 

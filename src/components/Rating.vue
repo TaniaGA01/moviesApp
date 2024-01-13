@@ -23,6 +23,7 @@ const poor = ref(0)
 
 </script>
 <template>
+  <!-- {{ popularity }} -->
 <div class="flex flex-row-reverse">
   <StarIcon :class="[moviePopularity > excellent ? `text-amber-400` : `text-slate-400`, `h-3 w-3`]"/>
   <StarIcon :class="[moviePopularity > veryGood ? `text-amber-400` : `text-slate-400`,`h-3 w-3`]"/>
