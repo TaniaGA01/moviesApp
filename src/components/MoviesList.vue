@@ -33,8 +33,8 @@ import Note from './Note.vue'
       class="rounded-lg border border-violet-600 p-2 bg-violet-950/40 hover:bg-violet-700/40 hover:scale-[105%] transition-all ease-in-out duration-200 "
     >
       <RouterLink :to="{ name: 'film', params: { id: movie.id } }">
-        <Note :note="movie.vote_average"/>
-        <img
+        <Note :note="movie.vote_average.toString()"/>
+        <img v-if="movie.poster_path"
           :src="`https://image.tmdb.org/t/p/w440_and_h660_face${movie.poster_path}`"
           alt=""
           srcset=""
