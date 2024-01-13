@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue';
+import { ref } from 'vue';
+import { StarIcon } from '@heroicons/vue/20/solid'
 
 const props = defineProps<{
     rating:any
@@ -8,25 +9,26 @@ const props = defineProps<{
 
 let MAX_RATING = ref(props.rating)
 let moviePopularity = ref()
-let pourcentage = ref()
 
-const fill = () => {
-  moviePopularity.value = Math.ceil(props.popularity * 100 / MAX_RATING.value).toString()
-  pourcentage.value = Math.ceil(100 - moviePopularity.value).toString()
+const pourcentage=() => {
+  moviePopularity.value = Math.floor(props.popularity * 100 / MAX_RATING.value)
 }
-fill()
+pourcentage()
+
+const excellent = ref(80)
+const veryGood = ref(60)
+const good = ref(40)
+const fair = ref(20)
+const poor = ref(0)
 
 </script>
 <template>
-<div class="w-fit stars">
-  <p :class="`bg-gradient-to-r
-    from-yellow-500 from-${moviePopularity}%
-    via-yellow-500 via-${pourcentage}%
-    to-violet-400 to-${pourcentage}%  text-transparent bg-clip-text`">
-        &#9733;&#9733;&#9733;&#9733;&#9733;
-    </p>
+<div class="flex flex-row-reverse">
+  <StarIcon :class="[moviePopularity > excellent ? `text-amber-400` : `text-slate-400`, `h-3 w-3`]"/>
+  <StarIcon :class="[moviePopularity > veryGood ? `text-amber-400` : `text-slate-400`,`h-3 w-3`]"/>
+  <StarIcon :class="[moviePopularity > good ? `text-amber-400` : `text-slate-400`,`h-3 w-3`]"/>
+  <StarIcon :class="[moviePopularity > fair ? `text-amber-400` : `text-slate-400`,`h-3 w-3`]"/>
+  <StarIcon :class="[moviePopularity > poor ? `text-amber-400` : `text-slate-400`,`h-3 w-3`]"/>
 </div>
 </template>
-<style lang="scss">
-</style>
 
