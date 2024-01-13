@@ -13,6 +13,7 @@ const {
 const route = useRoute()
 const movie = ref<Movie>()
 
+
 const getMovie = async () => {
   try {
     const urlGenre:string = `https://api.themoviedb.org/3/movie/${route.params.id}?language=fr-FR`;
