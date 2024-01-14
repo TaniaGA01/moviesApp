@@ -14,7 +14,7 @@ import Note from './Note.vue'
       const urlGenre:string = `https://api.themoviedb.org/3/genre/movie/list?language=fr`;
       genres.value.push(...(await axios.get(urlGenre, options)).data.genres)
     } catch (error) {
-      console.error('Not data found')
+      console.error('Data not found')
     }
   }
   getGenres()

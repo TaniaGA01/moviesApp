@@ -27,7 +27,7 @@ const strokeDashoffset = ref(Math.floor((circumference.value - pourcentage.value
               `cercle rounded-full w-12 h-12 p-1 absolute border-2 border-violet-700 -m-5 transition duration-150 ease-out`]"/>
         </svg>
         <span :class="[!noteL ? `text-amber-400` : ``,
-              parseInt(noteL) > 7.9 ? `text-lime-500`:`text-amber-400` ?
+              parseInt(noteL) > 7.9 ? `text-lime-400`:`text-amber-400` ?
               parseInt(noteL) > 4.9 && parseInt(noteL) < 7.9 ? ` text-amber-400`:`text-rose-600` : ``,`absolute text-white -ml-2 -mt-1`]" >{{ noteL }}</span>
       </div>
     </div>

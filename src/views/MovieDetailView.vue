@@ -30,8 +30,8 @@ getMovie()
   <div class="mx-auto max-w-2xl px-4 pt-16 sm:px-6 sm:pt-12 lg:pt-8 lg:max-w-7xl  flex justify-center">
     <div class=" flex flex-col items-center justify-center sm:w-1/2 p-12 rounded-lg border border-violet-600  bg-violet-950/40 relative">
       <div class="sm:flex sm:justify-end">
-        <img
-          :src="`https://image.tmdb.org/t/p/w440_and_h660_face${movie?.backdrop_path}`"
+        <img v-if="movie?.poster_path"
+          :src="`https://image.tmdb.org/t/p/w440_and_h660_face${movie?.poster_path}`"
           alt=""
           srcset=""
           class="rounded-md my-5 h-80"
@@ -39,7 +39,10 @@ getMovie()
       </div>
       <h1 class="text-white uppercase text-4xl mb-1 text-center ">{{ movie?.title }}</h1>
       <Rating :rating="rating" :popularity="movie?.popularity" class="ml-2"/>
-      <div class="flex flex-col items-center justify-center w-full">
+      <div class="flex flex-col items-center justify-center w-full mt-4">
+          <p class="text-white text-center">Date de sortie : {{ movie?.release_date }}</p>
+      </div>
+      <div class="flex flex-col items-center justify-center w-full mt-4">
           <p class="text-white text-center">{{ movie?.overview }}</p>
       </div>
     </div>
