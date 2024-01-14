@@ -2,7 +2,8 @@
 Projet de développement front-end
 
 
-## Trouvez [ici](https://moviesapp000.netlify.app/) la progression de ce projet
+## Trouvez [ici](https://moviesapp000.netlify.app/) la version 1
+## Trouvez [ici](https://moviesapp001.netlify.app/) l'avancement du projet
 
 ## Tableau de contenus
 
