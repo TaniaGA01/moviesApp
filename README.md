@@ -35,9 +35,9 @@ Ce projet pourrait avoir ces évolutions :
 
 - Un formulaire de recherche plus complète
 - Des transitions pour l'affichage de chaque carte
-- Une petite animation au moment du survol de la sourie sur chaque carte
-- Une animation pour afficher la note moyenne, par exemple une animation du pourcentage de la note si 10 equivaut au 100%
-- Un affichage de la popularité plus précis et animé aussi
+- Une petite animation au moment du survol de la sourie sur chaque carte ✅
+- Une animation pour afficher la note moyenne, par exemple une animation du pourcentage de la note si 10 equivaut au 100% ✅
+- Un affichage de la popularité plus précis ✅  et animé aussi 
 - Afficher le bouton de scroll to top bien avant d'arriver à la fin de la page
 - Una pagination en scroll
 - Une option pour changer de type de pagination
