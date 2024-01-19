@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
 
 import MoviesView from './MoviesView.vue'
 </script>
@@ -8,5 +7,3 @@ import MoviesView from './MoviesView.vue'
     <MoviesView />
   </main>
 </template>
-<style lang="scss" scoped>
-</style>

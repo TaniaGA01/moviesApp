@@ -5,19 +5,20 @@ import axios from "axios";
 
 export default function usePagination() {
 
-  let load = ref<boolean>(false)
-  let movies = ref<Movie[]>([])
-  let genres = ref<Genre[]>([])
-  let respData = ref<Movie[]>([])
-  let totalPages = ref(0)
-  let totalResults = ref(0)
-  let page = ref(1)
-  let perPage = 20
-  let title = ref()
-  let year = ref()
-  let rating = ref()
+  const load = ref<boolean>(false)
+  const movies = ref<Movie[]>([])
+  const genres = ref<Genre[]>([])
+  const respData = ref<Movie[]>([])
+  const title = ref<string>()
+  const year = ref<string>()
+  const rating = ref<number>()
+  const page = ref<number>(1)
+  const totalPages = ref<number>(0)
+  const totalResults = ref<number>(0)
+  const perPage = 20
 
-  const getAllPages = async (pageNumber:number = page.value, titleValue:string = title.value, yearValue:string = year.value) => {
+
+  const getAllPages = async (pageNumber:number = page.value, titleValue = title.value, yearValue = year.value) => {
     load.value = true
 
     let url:string = ''
@@ -45,7 +46,6 @@ export default function usePagination() {
       if(yearValue === undefined && pageNumber === 1){
         rating.value = respData.value[0].popularity
       }
-
     } catch (error) {
       console.log('error', error)
     } finally{
