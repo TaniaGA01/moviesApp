@@ -2,14 +2,13 @@
 import { ref } from 'vue'
 
 const props = defineProps<{
-  note: string
+  note: number
 }>()
 
 const radio = ref<number>(20)
 const x = ref<number>(30)
 const circumference = ref<number>(Math.floor(300))
-const pourcentage = ref<number>(Math.floor(parseInt(props.note) * 10))
-const noteL = ref<string>(parseInt(props.note).toFixed(1))
+const pourcentage = ref<number>(Math.floor(props.note * 10))
 const strokeDashoffset = ref<number>(Math.floor((circumference.value - pourcentage.value) - 12))
 
 </script>
@@ -20,16 +19,15 @@ const strokeDashoffset = ref<number>(Math.floor((circumference.value - pourcenta
         <circle :cx="x" :cy="x" :r="`${radio}`" stroke="currentColor" stroke-width="3" fill="transparent"
           :stroke-dasharray="circumference" :stroke-dashoffset="strokeDashoffset"
           :class="[
-            !noteL ? `text-amber-400` : ``,
-            parseInt(noteL) >= 7.9 ? `text-lime-500` : `text-amber-400` ?
-              parseInt(noteL) >= 4.9 && parseInt(noteL) <= 7.9 ? ` text-amber-400` : `text-rose-600` : ``,
+            !note ? `text-amber-400` : ``,
+            note >= 7.9 ? `text-lime-500` : `text-amber-400` ?
+              note >= 4.9 && note <= 7.9 ? ` text-amber-400` : `text-rose-600` : ``,
             `cercle rounded-full w-12 h-12 p-1 absolute border-2 border-violet-700 -m-5 transition duration-150 ease-out`]" />
       </svg>
-      <span
-        :class="[!noteL ? `text-amber-400` : ``,
-        parseInt(noteL) >= 7.9 ? `text-lime-400` : `text-amber-400` ?
-          parseInt(noteL) >= 4.9 && parseInt(noteL) <= 7.9 ? ` text-amber-400` : `text-rose-600` : ``, `absolute text-white -ml-2 -mt-1`]">
-        {{ noteL }}
+      <span :class="[!note ? `text-amber-400` : ``,
+      note >= 7.9 ? `text-lime-400` : `text-amber-400` ?
+        note >= 4.9 && note <= 7.9 ? ` text-amber-400` : `text-rose-600` : ``, `absolute text-white -ml-2 -mt-1`]">
+        {{ note }}
       </span>
     </div>
   </div>

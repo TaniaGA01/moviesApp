@@ -26,11 +26,11 @@ defineProps<{
 
 </script>
 <template>
-  <div class="grid grid-flow-row-dense grid-cols-1 grid-rows-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-7 ">
+  <div class="grid grid-flow-row-dense grid-cols-1 grid-rows-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 ">
     <div v-for="movie in respData" :key="movie.id"
       class="rounded-lg border border-violet-600 p-2 bg-violet-950/40 hover:bg-violet-700/40 hover:scale-[105%] transition-all ease-in-out duration-200 ">
       <RouterLink :to="{ name: 'film', params: { id: movie.id } }">
-        <Note :note="movie.vote_average.toString()" />
+        <Note :note="movie.vote_average" />
         <img v-if="movie.poster_path" :src="`https://image.tmdb.org/t/p/w440_and_h660_face${movie.poster_path}`" alt=""
           srcset="" class="rounded-md mb-2">
         <div class="inline-flex items-center h-20">

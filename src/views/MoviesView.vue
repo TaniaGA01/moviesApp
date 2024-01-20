@@ -157,8 +157,8 @@ const scrollTop = () => {
   <MoviesList :respData="data" :rating="rating" />
   <NoData v-if="data.length === 0 && !load" />
   <Pagination v-if="data.length !== 0 && !load" :respData="data" :totalResults="totalResults" :totalPages="totalPages"
-    :perPage="perPage" :firstPage="firstPage" :middlePages="middlePages" :lastPage="lastPage" :currentPage="page"
-    :goToPage="goToPage" :nextPage="nextPage" :backPage="backPage" />
+    :perPage="perPage" :firstPage="firstPage" :middlePages="middlePages" :currentPage="page" :goToPage="goToPage"
+    :nextPage="nextPage" :backPage="backPage" />
   <ScrollTop v-if="data.length !== 0 && !load" :scrollTop="scrollTop" />
 </template>
 @/services/composables/usePagination
