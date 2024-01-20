@@ -15,7 +15,7 @@ export default function usePagination() {
   const page = ref<number>(1)
   const totalPages = ref<number>(0)
   const totalResults = ref<number>(0)
-  const perPage = 20
+  const perPage = ref<number>(20)
 
 
   const getAllPages = async (pageNumber:number = page.value, titleValue = title.value, yearValue = year.value) => {

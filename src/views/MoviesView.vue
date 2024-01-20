@@ -26,8 +26,7 @@ const {
   backPage,
   goToPage,
   firstPage,
-  middlePages,
-  lastPage
+  middlePages
 } = usePagination()
 
 let data = ref<Movie[]>([])
@@ -37,7 +36,7 @@ watchEffect(() => {
 })
 
 const movieTitle = ref<string>()
-const movieYear = reactive({ year: ref() })
+const movieYear = ref<string>()
 const resultTitle = ref()
 const resultYear = ref()
 
@@ -48,8 +47,8 @@ const valideYearValue = ref(false)
 const regexExp = /^\d{4}$/
 
 const inputYearValidation = () => {
-  if (movieYear.year !== '') {
-    valideYearValue.value = regexExp.test(movieYear.year)
+  if (movieYear.value !== '') {
+    valideYearValue.value = regexExp.test(movieYear.value as string)
   }
 }
 
@@ -65,8 +64,7 @@ const save = async () => {
     alertTitle.show = false
   }
 
-  if (valideYearValue.value === false && movieYear.year) {
-
+  if (valideYearValue.value === false && movieYear.value) {
     alertYear.message = 'Merci de renseigner une année valide'
     alertYear.show = true
     return
@@ -74,22 +72,20 @@ const save = async () => {
     alertYear.show = false
   }
 
-  searchRequestValues(movieTitle.value, movieYear.year)
+  searchRequestValues(movieTitle.value, movieYear.value)
 
   resultTitle.value = movieTitle.value
-  resultYear.value = movieYear.year
-
-  // movieTitle.value = ref()
-  movieYear.year = ref()
-  totalPages.value = Math.ceil(data.value.length / perPage)
+  resultYear.value = movieYear.value
+  movieYear.value
+  totalPages.value = Math.ceil(data.value.length / perPage.value)
   totalResults.value = data.value.length
 
-  getAllPages(1, movieTitle.value, movieYear.year)
+  getAllPages(1, movieTitle.value, movieYear.value)
 }
 
 const reset = () => {
   movieTitle.value = ''
-  movieYear.year = ''
+  movieYear.value = ''
   alertTitle.show = false
   alertYear.show = false
   resultTitle.value = ''
@@ -131,7 +127,7 @@ const scrollTop = () => {
             :class="[alertYear.show === false ? 'text-white' : 'text-red-500', 'block text-sm font-medium leading-6']">Année
             du film</label>
           <div class="mt-2">
-            <input type="text" name="movie-year" id="movie-year" v-model="movieYear.year" placeholder="Année du film"
+            <input type="text" name="movie-year" id="movie-year" v-model="movieYear" placeholder="Année du film"
               @click="alertYear.show = false"
               :class="[alertYear.show === false ? 'focus:ring-violet-500 border-violet-700  ring-white/10' : 'border-red-500', 'block w-full rounded-md  bg-gray-950/40 py-1.5 text-white shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6 px-2 border ']" />
           </div>
