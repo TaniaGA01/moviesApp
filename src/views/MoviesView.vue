@@ -29,8 +29,7 @@ const {
   middlePages
 } = usePagination()
 
-let data = ref<Movie[]>([])
-
+const data = ref<Movie[]>([])
 watchEffect(() => {
   data.value = respData.value
 })
@@ -39,22 +38,16 @@ const movieTitle = ref<string>()
 const movieYear = ref<string>()
 const resultTitle = ref()
 const resultYear = ref()
-
 const alertTitle = reactive<AlertI>({ message: '', show: false })
 const alertYear = reactive<AlertI>({ message: '', show: false })
-
 const valideYearValue = ref(false)
 const regexExp = /^\d{4}$/
 
-const inputYearValidation = () => {
+const save = async () => {
+
   if (movieYear.value !== '') {
     valideYearValue.value = regexExp.test(movieYear.value as string)
   }
-}
-
-const save = async () => {
-
-  inputYearValidation()
 
   if (!movieTitle.value) {
     alertTitle.message = 'Merci de renseigner le titre du film'
@@ -157,4 +150,3 @@ const scrollTop = () => {
     :nextPage="nextPage" :backPage="backPage" />
   <ScrollTop v-if="data.length !== 0 && !load" :scrollTop="scrollTop" />
 </template>
-@/services/composables/usePagination
