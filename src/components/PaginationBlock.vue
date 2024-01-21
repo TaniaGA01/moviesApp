@@ -11,7 +11,7 @@ const props = defineProps<{
   movieYear: string | undefined
 }>()
 
-const { page, respData, getAllPages, searchRequestValues } = useDataMovies()
+const { load, page, respData, getAllPages, searchRequestValues } = useDataMovies()
 
 if (props.movieTitle !== undefined) {
   searchRequestValues(props.movieTitle, props.movieYear)
@@ -21,19 +21,23 @@ getAllPages(1, props.movieTitle, props.movieYear)
 
 const data = ref<Movie[]>([])
 const pageNumber = ref<any>()
+const loadPage = ref<boolean>()
 watchEffect(() => {
   data.value = respData.value
   pageNumber.value = page.value
+  loadPage.value = load.value
 })
 
 const emit = defineEmits([
   'new-page', 'newpage',
-  'new-data', 'newData'
+  'new-data', 'newData',
+  'new-load', 'newLoad'
 ])
 
 const emitData = (): void => {
   emit('new-page', pageNumber.value)
   emit('new-data', data.value)
+  emit('new-load', loadPage.value)
 }
 
 const nextPage = (): void => {

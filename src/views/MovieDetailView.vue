@@ -11,6 +11,8 @@ const { rating } = useDataMovies()
 const { load, movie, getMovie } = useMovie()
 getMovie(route.params.id as string)
 
+console.log('route', route.params.year)
+
 </script>
 <template>
   <div class="mx-auto max-w-full px-4 pt-16 sm:px-6 sm:pt-12 lg:pt-8 lg:max-w-7xl  block sm:flex sm:justify-center">

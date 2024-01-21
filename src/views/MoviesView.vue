@@ -28,17 +28,23 @@ const data = ref<Movie[]>([])
 const pageNumber = ref<any>()
 const movieTitle = ref<string>()
 const movieYear = ref<string>()
+const loadPage = ref<boolean>()
 watchEffect(() => {
   data.value = respData.value
   pageNumber.value = page.value
   movieTitle.value = title.value
   movieYear.value = year.value
+  loadPage.value = load.value
 })
 
 const alertTitle = reactive<AlertI>({ message: '', show: false })
 const alertYear = reactive<AlertI>({ message: '', show: false })
 const valideYearValue = ref(false)
 const regexExp = /^\d{4}$/
+
+const newLodad = (newLoad: boolean) => {
+  loadPage.value = newLoad
+}
 
 const newPage = (newPage: number) => {
   pageNumber.value = newPage
@@ -149,11 +155,11 @@ const scrollTop = () => {
     <button @click="reset()" class="text-sm text-violet-300 rounded px-3 py-1 mt-1 hover:text-violet-600">Réinitialiser la
       recherche</button>
   </div>
-  <Spinner v-if="load === true" />
+  <Spinner v-if="loadPage === true" />
   <SearchBy :resultTitle="movieTitle" :resultYear="movieYear" />
-  <MoviesList :respData="data" :rating="rating" />
+  <MoviesList :respData="data" :rating="rating" :movieYear="movieYear" />
   <NoData v-if="data.length === 0 && !load" />
   <Pagination v-if="data.length !== 0 && !load" :totalResults="totalResults" :totalPages="totalPages" :perPage="perPage"
-    :movieTitle="movieTitle" :movieYear="movieYear" @new-data="newData" @new-page="newPage" />
+    :movieTitle="movieTitle" :movieYear="movieYear" @new-data="newData" @new-page="newPage" @new-load="newLodad" />
   <ScrollTop v-if="data.length !== 0 && !load" :scrollTop="scrollTop" />
 </template>
