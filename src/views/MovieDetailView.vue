@@ -22,12 +22,13 @@ getMovie(route.params.id as string)
           srcset="" class="rounded-tl-md rounded-bl-md max-w-full sm:max-w-96 mx-auto">
       </div>
       <div class="p-12">
-        <h1 class="text-white uppercase text-4xl mb-1 text-left">{{ movie?.title }}</h1>
+        <h1 class="text-white font-semibold uppercase text-2xl mb-1 text-left">{{ movie?.title }}</h1>
         <div class="sm:flex items-start">
           <Rating :rating="rating" :popularity="movie?.popularity" />
         </div>
         <div class="flex flex-col text-left justify-center  mt-4">
-          <p class="text-white">Date de sortie : {{ movie?.release_date }}</p>
+          <p class="text-white"><small class="text-violet-300 text-left">Date de sortie :</small> {{ movie?.release_date
+          }}</p>
         </div>
         <div class="flex flex-col text-left justify-center mt-4">
           <p class="text-white ">{{ movie?.overview }}</p>

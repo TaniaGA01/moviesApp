@@ -122,4 +122,3 @@ const middlePages = (): number => {
     </div>
   </div>
 </template>
-@/services/composables/useMoviesData

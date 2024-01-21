@@ -149,7 +149,7 @@ const scrollTop = () => {
     <button @click="reset()" class="text-sm text-violet-300 rounded px-3 py-1 mt-1 hover:text-violet-600">Réinitialiser la
       recherche</button>
   </div>
-  <Spinner v-if="load" />
+  <Spinner v-if="load === true" />
   <SearchBy :resultTitle="movieTitle" :resultYear="movieYear" />
   <MoviesList :respData="data" :rating="rating" />
   <NoData v-if="data.length === 0 && !load" />
@@ -157,4 +157,3 @@ const scrollTop = () => {
     :movieTitle="movieTitle" :movieYear="movieYear" @new-data="newData" @new-page="newPage" />
   <ScrollTop v-if="data.length !== 0 && !load" :scrollTop="scrollTop" />
 </template>
-@/services/composables/useMoviesData

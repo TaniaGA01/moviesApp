@@ -12,7 +12,6 @@ export default function useMovie() {
     try {
       const urlMovie: string = `https://api.themoviedb.org/3/movie/${movieId}?language=fr-FR`;
       const { data } = await axios.get(urlMovie, options)
-      console.log('data', data)
       return movie.value = data
     } catch (error) {
       console.error('Data not found')
