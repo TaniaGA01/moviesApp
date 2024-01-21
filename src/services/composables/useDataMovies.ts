@@ -38,7 +38,7 @@ export default function useDataMovies() {
     try {
       data.value = (await axios.get(url.value as string, options)).data
     } catch (error) {
-      console.log('error', error)
+      console.log('Data not found', error)
     } finally{
       load.value = false
     }

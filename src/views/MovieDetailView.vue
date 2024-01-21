@@ -5,16 +5,13 @@ import { options } from '@/api/moviesAPI';
 import { useRoute } from 'vue-router';
 import type { Movie } from '@/services/interfaces/movies.interfaces';
 import Rating from '@/components/RatingBlock.vue';
-import usePagination from '@/services/composables/usePagination'
+import useDataMovies from '@/services/composables/useDataMovies'
 import Spinner from '@/components/SpinnerBlock.vue'
 
-const {
-  rating
-} = usePagination()
+const { rating } = useDataMovies()
 
 const route = useRoute()
 const movie = ref<Movie>()
-
 
 const getMovie = async () => {
   try {
@@ -22,7 +19,7 @@ const getMovie = async () => {
     const { data } = await axios.get(urlGenre, options)
     movie.value = data
   } catch (error) {
-    console.error('Not data found')
+    console.error('Data not found')
   }
 }
 getMovie()
