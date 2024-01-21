@@ -1,12 +1,12 @@
 <script setup lang="ts">
 defineProps<{
-  resultTitle:string
-  resultYear:string
+  resultTitle: string | undefined
+  resultYear: string | undefined
 }>()
 </script>
 <template>
-<div v-if="resultTitle || resultYear" class="mb-10">
-    <h2  class=" text-violet-500 uppercase">Résultats de la recherche par :
+  <div v-if="resultTitle || resultYear" class="mb-10">
+    <h2 class=" text-violet-500 uppercase">Résultats de la recherche par :
       <span class="text-white">
         {{ resultTitle }}
       </span>
@@ -19,6 +19,6 @@ defineProps<{
     </h2>
   </div>
   <div v-else class="mb-10 text-3xl">
-    <h2  class=" text-violet-500 uppercase font-semibold">Catalogue de films</h2>
+    <h2 class=" text-violet-500 uppercase font-semibold">Catalogue de films</h2>
   </div>
 </template>

@@ -2,13 +2,13 @@
 import { reactive, ref, watchEffect } from 'vue'
 import type { Movie } from '@/services/interfaces/movies.interfaces'
 import type { AlertI } from '@/services/interfaces/autres.interfaces'
-import usePagination from '@/services/composables/usePagination'
 import Spinner from '@/components/SpinnerBlock.vue'
 import SearchBy from '@/components/SearchBy.vue'
 import MoviesList from '@/components/MoviesList.vue'
 import NoData from '@/components/NoData.vue'
 import Pagination from '@/components/PaginationBlock.vue'
 import ScrollTop from '@/components/ScrollTop.vue'
+import useDataMovies from '@/services/composables/useDataMovies'
 
 const {
   load,
@@ -21,27 +21,37 @@ const {
   year,
   rating,
   getAllPages,
-  searchRequestValues,
-  nextPage,
-  backPage,
-  goToPage,
-  firstPage,
-  middlePages
-} = usePagination()
+  searchRequestValues
+} = useDataMovies()
 
 const data = ref<Movie[]>([])
-watchEffect(() => {
-  data.value = respData.value
-})
-
+const pageNumber = ref<any>()
 const movieTitle = ref<string>()
 const movieYear = ref<string>()
-const resultTitle = ref()
-const resultYear = ref()
+watchEffect(() => {
+  data.value = respData.value
+  pageNumber.value = page.value
+  movieTitle.value = title.value
+  movieYear.value = year.value
+})
+
 const alertTitle = reactive<AlertI>({ message: '', show: false })
 const alertYear = reactive<AlertI>({ message: '', show: false })
 const valideYearValue = ref(false)
 const regexExp = /^\d{4}$/
+
+const newPage = (newPage: number) => {
+  pageNumber.value = newPage
+}
+const newData = (newData: Movie[]) => {
+  if (pageNumber.value !== 1) {
+    data.value = [...newData]
+  } else {
+    watchEffect(() => {
+      data.value = respData.value
+    })
+  }
+}
 
 const save = async () => {
 
@@ -67,8 +77,8 @@ const save = async () => {
 
   searchRequestValues(movieTitle.value, movieYear.value)
 
-  resultTitle.value = movieTitle.value
-  resultYear.value = movieYear.value
+  movieTitle.value
+  movieYear.value
   movieYear.value
   totalPages.value = Math.ceil(data.value.length / perPage.value)
   totalResults.value = data.value.length
@@ -81,8 +91,6 @@ const reset = () => {
   movieYear.value = ''
   alertTitle.show = false
   alertYear.show = false
-  resultTitle.value = ''
-  resultYear.value = ''
   getAllPages(1, title.value = undefined, year.value = undefined)
 }
 
@@ -142,11 +150,10 @@ const scrollTop = () => {
       recherche</button>
   </div>
   <Spinner v-if="load" />
-  <SearchBy :resultTitle="resultTitle" :resultYear="resultYear" />
+  <SearchBy :resultTitle="movieTitle" :resultYear="movieYear" />
   <MoviesList :respData="data" :rating="rating" />
   <NoData v-if="data.length === 0 && !load" />
-  <Pagination v-if="data.length !== 0 && !load" :respData="data" :totalResults="totalResults" :totalPages="totalPages"
-    :perPage="perPage" :firstPage="firstPage" :middlePages="middlePages" :currentPage="page" :goToPage="goToPage"
-    :nextPage="nextPage" :backPage="backPage" />
+  <Pagination v-if="data.length !== 0 && !load" :totalResults="totalResults" :totalPages="totalPages" :perPage="perPage"
+    :movieTitle="movieTitle" :movieYear="movieYear" @new-data="newData" @new-page="newPage" />
   <ScrollTop v-if="data.length !== 0 && !load" :scrollTop="scrollTop" />
 </template>

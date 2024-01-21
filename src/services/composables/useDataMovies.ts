@@ -3,7 +3,7 @@ import type { Movie, Genre, MoviesData } from '@/services/interfaces/movies.inte
 import { options } from '@/api/moviesAPI';
 import axios from "axios";
 
-export default function usePagination() {
+export default function useDataMovies() {
 
   const load = ref<boolean>(false)
   const movies = ref<Movie[]>([])
@@ -61,38 +61,6 @@ export default function usePagination() {
     year.value = yearValue
   }
 
-  const nextPage = (): void => {
-    if (page.value !== 1) {
-      page.value + 1
-      getAllPages(page.value + 1, title.value, year.value)
-    }else{
-      page.value = 1
-      getAllPages(2, title.value, year.value)
-    }
-
-  };
-
-  const backPage = (): void => {
-      if (page.value !== 1) {
-          page.value - 1;
-          getAllPages(page.value - 1, title.value, year.value)
-      }
-  };
-
-  const goToPage = (numPage: number) => {
-      page.value = numPage;
-      getAllPages(numPage, title.value, year.value)
-  };
-
-  const firstPage = (): number => {
-    getAllPages(1, title.value, year.value)
-    return Math.ceil(page.value = 1)
-  }
-
-  const middlePages =() => {
-    return Math.ceil(page.value)
-  }
-
   return {
       load,
       movies,
@@ -106,12 +74,7 @@ export default function usePagination() {
       year,
       rating,
       getAllPages,
-      searchRequestValues,
-      nextPage,
-      backPage,
-      goToPage,
-      firstPage,
-      middlePages
+      searchRequestValues
   };
 
 }
