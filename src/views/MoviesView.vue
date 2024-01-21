@@ -8,7 +8,7 @@ import MoviesList from '@/components/MoviesList.vue'
 import NoData from '@/components/NoData.vue'
 import Pagination from '@/components/PaginationBlock.vue'
 import ScrollTop from '@/components/ScrollTop.vue'
-import useDataMovies from '@/services/composables/useDataMovies'
+import useDataMovies from '@/services/composables/useMoviesData'
 
 const {
   load,
@@ -157,3 +157,4 @@ const scrollTop = () => {
     :movieTitle="movieTitle" :movieYear="movieYear" @new-data="newData" @new-page="newPage" />
   <ScrollTop v-if="data.length !== 0 && !load" :scrollTop="scrollTop" />
 </template>
+@/services/composables/useMoviesData

@@ -1,6 +1,6 @@
 import { ref } from "vue"
-import type { Movie, Genre, MoviesData } from '@/services/interfaces/movies.interfaces';
-import { options } from '@/api/moviesAPI';
+import type { Movie, MoviesData } from '@/services/interfaces/movies.interfaces';
+import { options } from '@/services/api/moviesAPI';
 import axios from "axios";
 
 export default function useDataMovies() {
@@ -8,7 +8,6 @@ export default function useDataMovies() {
   const data = ref<MoviesData>()
   const load = ref<boolean>(false)
   const movies = ref<Movie[]>([])
-  const genres = ref<Genre[]>([])
   const respData = ref<Movie[]>([])
   const title = ref<string>()
   const year = ref<string>()
@@ -55,7 +54,6 @@ export default function useDataMovies() {
   return {
       load,
       movies,
-      genres,
       respData,
       totalPages,
       totalResults,

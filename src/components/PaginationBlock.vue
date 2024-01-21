@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import useDataMovies from '@/services/composables/useDataMovies';
+import useDataMovies from '@/services/composables/useMoviesData';
 import type { Movie } from '@/services/interfaces/movies.interfaces';
 import { ref, watchEffect } from 'vue';
 
@@ -122,3 +122,4 @@ const middlePages = (): number => {
     </div>
   </div>
 </template>
+@/services/composables/useMoviesData

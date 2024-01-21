@@ -1,46 +1,42 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import axios from 'axios';
-import { options } from '@/api/moviesAPI';
 import { useRoute } from 'vue-router';
-import type { Movie } from '@/services/interfaces/movies.interfaces';
 import Rating from '@/components/RatingBlock.vue';
-import useDataMovies from '@/services/composables/useDataMovies'
+import useDataMovies from '@/services/composables/useMoviesData'
 import Spinner from '@/components/SpinnerBlock.vue'
+import useMovie from '@/services/composables/useMovie';
 
-const { rating } = useDataMovies()
 
 const route = useRoute()
-const movie = ref<Movie>()
-
-const getMovie = async () => {
-  try {
-    const urlGenre: string = `https://api.themoviedb.org/3/movie/${route.params.id}?language=fr-FR`;
-    const { data } = await axios.get(urlGenre, options)
-    movie.value = data
-  } catch (error) {
-    console.error('Data not found')
-  }
-}
-getMovie()
+const { rating } = useDataMovies()
+const { load, movie, getMovie } = useMovie()
+getMovie(route.params.id as string)
 
 </script>
 <template>
-  <div class="mx-auto max-w-2xl px-4 pt-16 sm:px-6 sm:pt-12 lg:pt-8 lg:max-w-7xl  flex justify-center">
-    <Spinner v-if="!movie" />
+  <div class="mx-auto max-w-full px-4 pt-16 sm:px-6 sm:pt-12 lg:pt-8 lg:max-w-7xl  block sm:flex sm:justify-center">
+    <Spinner v-if="load === true" />
     <div v-else
-      class=" flex flex-col items-center justify-center sm:w-1/2 p-12 rounded-lg border border-violet-600  bg-violet-950/40 relative">
-      <div class="sm:flex sm:justify-end">
+      class=" block lg:flex sm:items-center sm:justify-center w-full md:w-2/3 rounded-lg border border-violet-600  bg-violet-950/40 relative">
+      <div class="w-full lg:w-1/2 flex justify-center">
         <img v-if="movie?.poster_path" :src="`https://image.tmdb.org/t/p/w440_and_h660_face${movie?.poster_path}`" alt=""
-          srcset="" class="rounded-md my-5 h-80">
+          srcset="" class="rounded-tl-md rounded-bl-md max-w-full sm:max-w-96 mx-auto">
       </div>
-      <h1 class="text-white uppercase text-4xl mb-1 text-center ">{{ movie?.title }}</h1>
-      <Rating :rating="rating" :popularity="movie?.popularity" class="ml-2" />
-      <div class="flex flex-col items-center justify-center w-full mt-4">
-        <p class="text-white text-center">Date de sortie : {{ movie?.release_date }}</p>
-      </div>
-      <div class="flex flex-col items-center justify-center w-full mt-4">
-        <p class="text-white text-center">{{ movie?.overview }}</p>
+      <div class="p-12">
+        <h1 class="text-white uppercase text-4xl mb-1 text-left">{{ movie?.title }}</h1>
+        <div class="sm:flex items-start">
+          <Rating :rating="rating" :popularity="movie?.popularity" />
+        </div>
+        <div class="flex flex-col text-left justify-center  mt-4">
+          <p class="text-white">Date de sortie : {{ movie?.release_date }}</p>
+        </div>
+        <div class="flex flex-col text-left justify-center mt-4">
+          <p class="text-white ">{{ movie?.overview }}</p>
+        </div>
+        <div class="flex flex-wrap justify-start mt-3 relative">
+          <small v-for="(genre, idx) in movie?.genres" :key="`${idx}`" class="text-violet-400 text-left mr-7">{{
+            genre.name
+          }}</small>
+        </div>
       </div>
     </div>
   </div>
@@ -49,4 +45,3 @@ getMovie()
     </RouterLink>
   </div>
 </template>
-@/services/composables/usePagination

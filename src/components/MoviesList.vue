@@ -1,28 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import axios from 'axios'
-import { options } from '@/api/moviesAPI'
-import type { Genre, Movie } from '@/services/interfaces/movies.interfaces'
+import type { Movie } from '@/services/interfaces/movies.interfaces'
 import Rating from './RatingBlock.vue'
 import Note from './NoteBlock.vue'
-
-let genres = ref<Genre[]>([])
-
-const getGenres = async () => {
-
-  try {
-    const urlGenre: string = `https://api.themoviedb.org/3/genre/movie/list?language=fr`;
-    genres.value.push(...(await axios.get(urlGenre, options)).data.genres)
-  } catch (error) {
-    console.error('Data not found')
-  }
-}
-getGenres()
+import useMoviesGenre from '@/services/composables/useMovieGenres';
 
 defineProps<{
   respData: Array<Movie>
   rating: number | undefined
 }>()
+
+const { genres } = useMoviesGenre()
 
 </script>
 <template>
