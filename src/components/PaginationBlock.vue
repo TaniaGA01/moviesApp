@@ -31,7 +31,7 @@ const emit = defineEmits([
   'new-data', 'newData'
 ])
 
-const emitData = () => {
+const emitData = (): void => {
   emit('new-page', pageNumber.value)
   emit('new-data', data.value)
 }
@@ -53,7 +53,7 @@ const backPage = (): void => {
   emitData()
 };
 
-const goToPage = (numPage: number) => {
+const goToPage = (numPage: number): void => {
   pageNumber.value = numPage;
   getAllPages(numPage, props.movieTitle, props.movieYear)
   emitData()
@@ -65,7 +65,7 @@ const firstPage = (): number => {
   return Math.ceil(pageNumber.value = 1)
 }
 
-const middlePages = () => {
+const middlePages = (): number => {
   emitData()
   return Math.ceil(pageNumber.value)
 }

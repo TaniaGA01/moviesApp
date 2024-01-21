@@ -4,7 +4,8 @@ import { options } from '@/api/moviesAPI';
 import axios from "axios";
 
 export default function useDataMovies() {
-
+  const url = ref<string>()
+  const data = ref<MoviesData>()
   const load = ref<boolean>(false)
   const movies = ref<Movie[]>([])
   const genres = ref<Genre[]>([])
@@ -21,19 +22,9 @@ export default function useDataMovies() {
   const getAllPages = async (pageNumber:number = page.value, titleValue = title.value, yearValue = year.value) => {
     load.value = true
 
-    const url=ref<string>()
-
-    const getData = () => {
-      if(titleValue === undefined || yearValue === undefined){
-        url.value = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fr-FR&region=FR&sort_by=popularity.desc&page=${pageNumber}`
-      }
-      else{
-        url.value = `https://api.themoviedb.org/3/search/movie?query=${titleValue}&include_adult=false&language=fr-FR&page=${pageNumber}&year=${yearValue}`
-      }
-    }
-    getData()
-
-    const data = ref<MoviesData>()
+    titleValue === undefined || yearValue === undefined
+    ? url.value = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fr-FR&region=FR&sort_by=popularity.desc&page=${pageNumber}`
+    : url.value = `https://api.themoviedb.org/3/search/movie?query=${titleValue}&include_adult=false&language=fr-FR&page=${pageNumber}&year=${yearValue}`
 
     try {
       data.value = (await axios.get(url.value as string, options)).data
