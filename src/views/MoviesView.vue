@@ -50,6 +50,8 @@ const newPage = (newPage: number) => {
   pageNumber.value = newPage
 }
 const newData = (newData: Movie[]) => {
+  alertTitle.show = false
+  alertYear.show = false
   if (pageNumber.value !== 1) {
     data.value = [...newData]
   } else {
@@ -90,6 +92,7 @@ const save = async () => {
   totalResults.value = data.value.length
 
   getAllPages(1, movieTitle.value, movieYear.value)
+
 }
 
 const reset = () => {
